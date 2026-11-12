@@ -1,0 +1,18 @@
+---
+- name: Decommissioning failure callback scaffold
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../vars/defaults.yml
+  pre_tasks:
+    - name: Check request and skeleton execution mode
+      ansible.builtin.import_tasks: tasks/preflight.yml
+  tasks:
+    - name: Preview failure routing
+      ansible.builtin.debug:
+        msg:
+          - 'SKELETON ONLY: obtain failed node details using the Controller workflow job ID.'
+          - 'Readiness dependency and data decisions go to service owner; technical failures go to infrastructure admin.'
+          - 'Record per-server completed and outstanding actions in ServiceNow and leave the request open.'
+          - 'Stop dependent cleanup and preserve retained data and allocations when removal is unverified.'
+          - 'Do not rely on failed-job artifacts; retrieve durable evidence and revalidate before retrying.'

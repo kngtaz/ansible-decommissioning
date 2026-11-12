@@ -1,0 +1,46 @@
+---
+# Synthetic values only; timestamps are examples, not an approved execution window.
+request:
+  ticket_number: RITM0000002
+  ticket_sys_id: replace-with-servicenow-sys-id
+  service_owner: example-service-owner
+  infrastructure_assignment_group: example-infrastructure-group
+  service_owner_assignment_group: example-service-owner-group
+  environment: poc
+  source_of_truth: infoblox
+  removal_window:
+    start_utc: '2026-12-01T01:00:00Z'
+    end_utc: '2026-12-01T03:00:00Z'
+  servers:
+    - resource_id: example-vm-123
+      name: poc-rhel-01.example.test
+      platform: vmware
+      location: example-datacenter
+      os_family: rhel
+      role: splunk
+      dependency_evidence: replace-with-approved-dependency-review-reference
+      retention_evidence: replace-with-approved-retention-review-reference
+      backup_evidence: replace-with-verified-backup-reference-or-approved-exemption
+      data_disposition: retain
+      storage:
+        - resource_id: example-disk-123
+          disposition: retain
+          retention_reference: replace-with-retention-policy-reference
+      snapshots: []
+      shared_resources_to_preserve: []
+    - resource_id: example-cloud-instance-456
+      name: poc-rhel-02.example.test
+      platform: cloud
+      location: example-cloud-account-and-region
+      os_family: rhel
+      role: ''
+      dependency_evidence: replace-with-approved-dependency-review-reference
+      retention_evidence: replace-with-approved-retention-review-reference
+      backup_evidence: replace-with-verified-backup-reference-or-approved-exemption
+      data_disposition: delete
+      storage:
+        - resource_id: example-volume-456
+          disposition: delete
+          retention_reference: replace-with-approved-disposal-reference
+      snapshots: []
+      shared_resources_to_preserve: []

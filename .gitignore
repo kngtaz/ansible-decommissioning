@@ -1,0 +1,7 @@
+*.retry
+.venv/
+__pycache__/
+.env
+vault-password*
+vars/request.local.yml
+artifacts/

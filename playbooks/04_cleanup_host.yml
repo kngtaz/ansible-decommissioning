@@ -1,0 +1,20 @@
+---
+- name: Job 4 - Complete host-side cleanup
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../vars/defaults.yml
+  vars:
+    stage_id: 04_cleanup_host
+    planned_tasks:
+      - "Rebuild target inventory from trusted resource metadata while hosts remain reachable."
+      - "Preserve required data and evidence and verify completion before unregistering clients."
+      - "Unregister applicable RHEL subscription and management clients, then unenroll the identity client."
+      - "Use an access method that remains valid after unenrollment; stop and route unreachable hosts for an approved exception path."
+      - "Record per-server cleanup results and do not proceed to deletion on an unresolved failure."
+  pre_tasks:
+    - name: Check request and skeleton execution mode
+      ansible.builtin.import_tasks: tasks/preflight.yml
+  tasks:
+    - name: Preview this job integration tasks
+      ansible.builtin.import_tasks: tasks/preview.yml

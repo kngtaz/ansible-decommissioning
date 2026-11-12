@@ -1,0 +1,10 @@
+---
+# Sequential local walkthrough; AAP uses individual job templates.
+- ansible.builtin.import_playbook: 01_validate_targets.yml
+- ansible.builtin.import_playbook: 02_confirm_retirement_readiness.yml
+- ansible.builtin.import_playbook: 03_withdraw_application_services.yml
+- ansible.builtin.import_playbook: 04_cleanup_host.yml
+- ansible.builtin.import_playbook: 05_remove_compute.yml
+- ansible.builtin.import_playbook: 06_retire_enterprise_records.yml
+- ansible.builtin.import_playbook: 07_release_network_inventory.yml
+- ansible.builtin.import_playbook: 08_verify_completion.yml

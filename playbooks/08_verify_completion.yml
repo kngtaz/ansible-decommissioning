@@ -1,0 +1,20 @@
+---
+- name: Job 8 - Verify decommissioning completion and handoff
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../vars/defaults.yml
+  vars:
+    stage_id: 08_verify_completion
+    planned_tasks:
+      - "Independently verify compute absence, storage disposition, certificate revocation, identity/management cleanup, DNS cleanup and inventory retirement."
+      - "List retained disks, snapshots, backups, retention references, responsible owners and future disposition requirements."
+      - "If any required action is incomplete keep the request open and assign remediation to infrastructure admin."
+      - "Revalidate targets and completed actions before retrying failed steps; never repeat destructive actions blindly."
+      - "Update ServiceNow with final per-server evidence and route to service owner or requester for validation and closure."
+  pre_tasks:
+    - name: Check request and skeleton execution mode
+      ansible.builtin.import_tasks: tasks/preflight.yml
+  tasks:
+    - name: Preview this job integration tasks
+      ansible.builtin.import_tasks: tasks/preview.yml

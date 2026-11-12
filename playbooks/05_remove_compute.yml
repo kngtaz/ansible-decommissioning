@@ -1,0 +1,22 @@
+---
+- name: Job 5 - Remove compute and verify storage disposition
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../vars/defaults.yml
+  vars:
+    stage_id: 05_remove_compute
+    planned_tasks:
+      - "Recheck authoritative approval, active removal window, immutable resource IDs, ownership, location, and readiness evidence."
+      - "Apply provider-specific retention safeguards before instance deletion so retained disks are not auto-deleted."
+      - "Shut down and remove instances through the selected VMware or cloud management adapter."
+      - "Apply only the approved disposition to explicitly scoped disks and snapshots; preserve shared resources."
+      - "Poll the provider until compute absence and storage disposition are verified per server."
+      - "Distinguish genuine absence from authorization errors, API failures, or stale inventory."
+      - "On partial failure preserve evidence and stop dependent cleanup; do not release network allocations."
+  pre_tasks:
+    - name: Check request and skeleton execution mode
+      ansible.builtin.import_tasks: tasks/preflight.yml
+  tasks:
+    - name: Preview this job integration tasks
+      ansible.builtin.import_tasks: tasks/preview.yml

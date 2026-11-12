@@ -1,0 +1,21 @@
+---
+- name: Job 7 - Release network allocations and retire inventory
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../vars/defaults.yml
+  vars:
+    stage_id: 07_release_network_inventory
+    planned_tasks:
+      - "Require verified compute absence and approved storage disposition before releasing allocations."
+      - "Recheck ownership of dedicated DNS A, AAAA, PTR and remaining CNAME records before removing them."
+      - "Release dedicated IP allocations and DHCP reservations using the authoritative DNS/IPAM provider."
+      - "Retire applicable Purview, Infoblox and ServiceNow CMDB records while preserving ownership and retirement history."
+      - "Use product-supported retirement/history mechanisms; do not assume every inventory API supports a retired state."
+      - "Preserve shared allocations and record each cleanup result in ServiceNow."
+  pre_tasks:
+    - name: Check request and skeleton execution mode
+      ansible.builtin.import_tasks: tasks/preflight.yml
+  tasks:
+    - name: Preview this job integration tasks
+      ansible.builtin.import_tasks: tasks/preview.yml

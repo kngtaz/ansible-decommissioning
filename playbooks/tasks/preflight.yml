@@ -1,0 +1,52 @@
+---
+- name: Require a request payload
+  ansible.builtin.assert:
+    that:
+      - request is defined
+      - request is mapping
+    fail_msg: Supply -e @vars/request.example.yml or the approved ServiceNow payload.
+
+- name: Validate minimum request structure
+  ansible.builtin.assert:
+    that:
+      - request.ticket_number | default('') | length > 0
+      - request.ticket_sys_id | default('') | length > 0
+      - request.service_owner | default('') | length > 0
+      - request.environment | default('') | length > 0
+      - request.source_of_truth | default('') in ['purview', 'infoblox']
+      - request.removal_window.start_utc | default('') | length > 0
+      - request.removal_window.end_utc | default('') | length > 0
+      - request.servers | default([]) | length > 0
+
+- name: Validate each decommissioning target
+  ansible.builtin.assert:
+    that:
+      - server.resource_id | default('') | length > 0
+      - server.name | default('') | length > 0
+      - server.platform | default('') in ['vmware', 'cloud']
+      - server.location | default('') | length > 0
+      - server.os_family | default('') | length > 0
+      - server.role is defined
+      - server.data_disposition | default('') in ['retain', 'delete']
+      - server.dependency_evidence | default('') | length > 0
+      - server.retention_evidence | default('') | length > 0
+      - server.backup_evidence | default('') | length > 0
+      - server.storage is defined
+      - server.snapshots is defined
+      - server.shared_resources_to_preserve is defined
+    fail_msg: A target is missing required identity or disposition fields.
+  loop: '{{ request.servers }}'
+  loop_control:
+    loop_var: server
+    label: '{{ server.name | default("unnamed") }}'
+
+- name: Reject duplicate requested hostnames
+  ansible.builtin.assert:
+    that:
+      - (request.servers | map(attribute='name') | list | unique | length) == (request.servers | length)
+
+- name: Prevent execution of unimplemented integrations
+  ansible.builtin.assert:
+    that:
+      - skeleton_mode | bool
+    fail_msg: Live decommissioning adapters are not implemented. Complete and validate them before enabling live execution.

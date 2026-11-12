@@ -1,0 +1,20 @@
+---
+- name: Job 2 - Confirm retirement readiness
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../vars/defaults.yml
+  vars:
+    stage_id: 02_confirm_retirement_readiness
+    planned_tasks:
+      - "Confirm service dependencies have been migrated or retired using authoritative evidence."
+      - "Validate data disposition, retention requirements, legal holds, verified backups or approved exemptions, and all disk/snapshot dispositions."
+      - "Discover attached resources and compare them to approved scope; stop on omissions or shared-resource ambiguity."
+      - "Route unresolved dependencies or data-disposition decisions to the service owner and fail the job."
+      - "Validate the approved removal window against the current time; record readiness in ServiceNow before execution."
+  pre_tasks:
+    - name: Check request and skeleton execution mode
+      ansible.builtin.import_tasks: tasks/preflight.yml
+  tasks:
+    - name: Preview this job integration tasks
+      ansible.builtin.import_tasks: tasks/preview.yml

@@ -1,0 +1,20 @@
+---
+- name: Job 6 - Retire identity certificate and management records
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../vars/defaults.yml
+  vars:
+    stage_id: 06_retire_enterprise_records
+    planned_tasks:
+      - "Require verified compute removal and use the captured identifiers from before deletion."
+      - "Revoke host-specific machine certificates through IdM CA and application certificates through their issuing Certificate Server."
+      - "Remove applicable IdM host and service records and group memberships; reconcile Satellite records."
+      - "Preserve shared certificates and records still required by other systems."
+      - "Record cleanup evidence and route incomplete work to infrastructure admin."
+  pre_tasks:
+    - name: Check request and skeleton execution mode
+      ansible.builtin.import_tasks: tasks/preflight.yml
+  tasks:
+    - name: Preview this job integration tasks
+      ansible.builtin.import_tasks: tasks/preview.yml

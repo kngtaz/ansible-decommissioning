@@ -1,0 +1,13 @@
+{{ {
+  'ticket_number': request.ticket_number,
+  'service_owner': request.service_owner,
+  'environment': request.environment,
+  'resource_id': server.resource_id,
+  'server_name': server.name,
+  'platform': server.platform,
+  'location': server.location,
+  'data_disposition': server.data_disposition,
+  'storage': server.storage,
+  'snapshots': server.snapshots,
+  'status': 'planned_not_verified'
+} | to_nice_json }}

@@ -1,0 +1,19 @@
+---
+- name: Job 1 - Validate decommissioning targets
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../vars/defaults.yml
+  vars:
+    stage_id: 01_validate_targets
+    planned_tasks:
+      - "Read the approved ServiceNow request and match immutable resource IDs against compute and inventory records."
+      - "Validate ownership, environment, platform location, exact removal scope, and uniqueness of platform/location/resource ID tuples."
+      - "Reject hostname-only matches, unexpected resources, and mismatches; route technical corrections to infrastructure admin."
+      - "Capture per-server metadata needed for later certificate, identity, management, DNS and inventory cleanup before deleting anything."
+  pre_tasks:
+    - name: Check request and skeleton execution mode
+      ansible.builtin.import_tasks: tasks/preflight.yml
+  tasks:
+    - name: Preview this job integration tasks
+      ansible.builtin.import_tasks: tasks/preview.yml

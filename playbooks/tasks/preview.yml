@@ -1,0 +1,17 @@
+---
+- name: Show integration work still to implement
+  ansible.builtin.debug:
+    msg: 'SKELETON ONLY | {{ stage_id }} | {{ planned_task }}'
+  loop: '{{ planned_tasks }}'
+  loop_control:
+    loop_var: planned_task
+
+- name: Publish a preview artifact for AAP
+  ansible.builtin.set_stats:
+    data:
+      decommissioning_preview:
+        stage: '{{ stage_id }}'
+        ticket: '{{ request.ticket_number }}'
+        status: skeleton_only_not_executed
+    per_host: false
+    aggregate: false

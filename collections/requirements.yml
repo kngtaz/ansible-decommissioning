@@ -1,0 +1,4 @@
+---
+# The preview uses ansible.builtin only.
+# Add pinned, approved collection versions once provider adapters are selected.
+collections: []
